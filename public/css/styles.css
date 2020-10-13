@@ -1,0 +1,24 @@
+.login-container {
+  width: 400px;
+  margin-top: 50px;
+  text-align: center;
+}
+p {
+  margin: 10px 0 !important;
+}
+
+.blog_stop {
+  padding-top: 20px;
+  font-weight: bold;
+}
+
+.lead {
+  font-weight: bold;
+}
+.fa-small {
+  font-size: 16px !important;
+}
+.btn-float {
+  float: left;
+  margin-right: 10px;
+}
