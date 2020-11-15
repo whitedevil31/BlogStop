@@ -44,7 +44,7 @@ router.get("/:id", ensureAuth, async (req, res) => {
     if (blog.user._id != req.user.id && blog.status == "private") {
       res.render("error/404");
     } else {
-      res.render("blog/show", {
+      res.render("blogs/show", {
         blog,
       });
     }
@@ -95,10 +95,11 @@ router.put("/:id", ensureAuth, async (req, res) => {
 });
 router.delete("/:id", ensureAuth, async (req, res) => {
   try {
-    let blog = await Blog.findById(req.params.id).lean();
+    await Blog.remove({ _id: req.params.id });
+    res.redirect("/dashboard");
 
     if (!blog) {
-      return res.render("error/404");
+      return res.render("error/500");
     }
 
     if (blog.user != req.user.id) {
@@ -121,7 +122,7 @@ router.get("/user/:userId", ensureAuth, async (req, res) => {
       .populate("user")
       .lean();
 
-    res.render("blog/index", {
+    res.render("blogs/index", {
       blog,
     });
   } catch (err) {
