@@ -76,26 +76,21 @@ router.get("/edit/:id", ensureAuth, async (req, res) => {
   }
 });
 router.put("/:id", ensureAuth, async (req, res) => {
-  try {
-    let blog = await Blog.findById(req.params.id).lean();
+  let blog = await Blog.findById(req.params.id).lean();
 
-    if (!blog) {
-      return res.render("error/404");
-    }
+  if (!blog) {
+    return res.render("error/404");
+  }
 
-    if (blog.user != req.user.id) {
-      res.redirect("/blogs");
-    } else {
-      blog = await Blog.findByIdAndUpdate({ _id: req.params.id }, req.body, {
-        new: true,
-        runValidators: true,
-      });
+  if (blog.user != req.user.id) {
+    res.redirect("/blogs");
+  } else {
+    blog = await Blog.findByIdAndUpdate({ _id: req.params.id }, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
-      res.redirect("/dashboard");
-    }
-  } catch (err) {
-    console.error(err);
-    return res.render("error/500");
+    res.redirect("/dashboard");
   }
 });
 router.delete("/:id", ensureAuth, async (req, res) => {
